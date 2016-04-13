@@ -13,7 +13,7 @@ class Walls {
     this.horizontal = new boolean[boardHeight][boardWidth];
     for (int i=0; i<boardHeight; i++) {
       for (int j=0; j<boardWidth; j++) {
-        if (j == 25 || j == 35) {
+        if (j == 70 || j == 90) {
           vertical[i][j] = true;
         } 
       }

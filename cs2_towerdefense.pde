@@ -1,5 +1,5 @@
-int wallVert = 3;
-int wallHor = 10;
+int wallVert = 5;
+int wallHor = 5;
 final int boardWidth = 900/wallHor; // number of dots across
 final int boardHeight = 900/wallVert; // number of dots down
 final int bloonRadius = 20;
@@ -10,6 +10,7 @@ boolean aboveB = false;
 boolean belowB = false;
 boolean rightB = false;
 boolean leftB = false;
+PVector mouseSpot = new PVector(400, 300);
 
 float bloonSpeed = 2;
 
@@ -23,21 +24,31 @@ void setup() {
   walls = new Walls();
   bloons = new ArrayList ();
   bloons.add (new Bloons());
+  tower = new ArrayList ();
+  tower.add (new Tower(mouseSpot));
 }
 
 void draw() {
   clear();
   walls.render();
   //printScore();
-  for (int i = 0; i < bloons.size(); i++) {
-    if (bloons.get(i).bKill) {
-      bloons.remove(i);
-    } else {
-      bloons.get(i).updatePositionB (bloons.get(i));
-      bloons.get(i).render();
-      new Bloons();
-      lose();
+  if (bloons.size() >0) {
+    for (int i = 0; i < bloons.size(); i++) {
+      if (bloons.get(i).bKill) {
+        bloons.remove(i);
+      } else {
+        bloons.get(i).updatePositionB (bloons.get(i));
+        bloons.get(i).render();
+        new Bloons();
+        lose();
+      }
     }
+  }
+  for (int i = 0; i < tower.size(); i++) {
+    tower.get(i).releaseArrows();
+  }
+  for (int i = 0; i < arrow.size(); i++) {
+    arrow.get(i).render();
   }
   removeIfColliding();
 }
@@ -53,13 +64,15 @@ void lose () {
 }
 
 void removeIfColliding () {
-  for (int i = 0; i < bloons.size(); i++) {
-    for (int j = 0; j < arrow.size(); j++) {
-      Bloons bloon = bloons.get(i);
-      Arrow arro = arrow.get(j);
-      if (colliding (arro, bloon)) {
-        bloons.remove(i);
-        arrow.remove(j);
+  if (bloons.size() > 0) {
+    for (int i = 0; i < bloons.size(); i++) {
+      for (int j = 0; j < arrow.size(); j++) {
+        Bloons bloon = bloons.get(i);
+        Arrow arro = arrow.get(j);
+        if (colliding (arro, bloon)) {
+          bloons.remove(i);
+          arrow.remove(j);
+        }
       }
     }
   }

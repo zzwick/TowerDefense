@@ -3,7 +3,7 @@ class Bloons {
   final float speed = bloonSpeed;
   private Dir travelDirection = Dir.EAST;
   private boolean bKill;
-  private final float startHeight = boardWidth*2;
+  private final float startHeight = wallHor*80;
 
   Bloons() {
     position = new PVector(0, startHeight);
