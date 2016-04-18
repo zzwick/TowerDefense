@@ -3,9 +3,11 @@ class Arrow {
   float angle;  //added float angle to the breakers so they go from the direction of the spaceship
   float speed;
   float radius = 5;
+  final PVector origCent;
 
   Arrow(PVector c, float a, float s) {
     center = c;
+    origCent = c;
     angle = a;  //breaker now takes float angle
     speed = s;
   }
@@ -19,6 +21,16 @@ class Arrow {
     PVector c = center;
     ellipse(c.x, c.y, 5, 5);
     c.x = c.x + cos(angle)*(height/100);
-    c.y = c.y + sin(angle)*(height/100);
+    c.y = c.y + sin(angle)*(height/100);      
+  }
+  Boolean tooFar () {
+    PVector c = center;
+    PVector og = origCent;
+    if (dist(c.x,c.y,og.x,og.y) > 5) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

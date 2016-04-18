@@ -31,6 +31,7 @@ class Bloons {
             walls.collisionB(position, b, b.travelDirection);
             moveIfCollideB();
     }
+    makeBloons();
   }
   void moveIfCollideB () {
     if (rightB) {
@@ -46,6 +47,15 @@ class Bloons {
     } else if (belowB) {
       //    position = (position.x , position.y - wallHor);
       position.y = position.y - wallHor;
+    }
+  }
+  
+  void makeBloons () {
+    float ranMake = random(0,1);
+    if (ranMake < 0.01) {
+      if (bloons.size() < 10) {
+      bloons.add(new Bloons());
+      }
     }
   }
 /*    void kill (PVector fromPosition, PVector toPosition) {

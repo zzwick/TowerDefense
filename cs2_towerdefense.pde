@@ -48,6 +48,12 @@ void draw() {
     tower.get(i).releaseArrows();
   }
   for (int i = 0; i < arrow.size(); i++) {
+    if (arrow.get(i).tooFar()) {
+      println(arrow.get(i).tooFar());
+      arrow.remove(i);
+    }
+  }
+  for (int i = 0; i < arrow.size(); i++) {
     arrow.get(i).render();
   }
   removeIfColliding();
@@ -66,8 +72,8 @@ void lose () {
 void removeIfColliding () {
   if (bloons.size() > 0) {
     for (int i = 0; i < bloons.size(); i++) {
+      Bloons bloon = bloons.get(i);
       for (int j = 0; j < arrow.size(); j++) {
-        Bloons bloon = bloons.get(i);
         Arrow arro = arrow.get(j);
         if (colliding (arro, bloon)) {
           bloons.remove(i);
