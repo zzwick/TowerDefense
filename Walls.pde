@@ -102,6 +102,7 @@ class Walls {
         }
       }
     }
+
   }
 
   //makes a wall for vertical oriented with vertically and shifter up dotsbloonsing/2

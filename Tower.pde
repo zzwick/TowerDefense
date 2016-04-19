@@ -17,7 +17,7 @@ class Tower {
   }
   void releaseArrows() {
     render();
-    if (t%20 == 0) {
+    if (t%40 == 0) {
       shootArrow();
     }
     t = t+1;

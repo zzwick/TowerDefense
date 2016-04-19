@@ -7,7 +7,7 @@ class Arrow {
 
   Arrow(PVector c, float a, float s) {
     center = c;
-    origCent = c;
+    origCent = c.copy();
     angle = a;  //breaker now takes float angle
     speed = s;
   }
@@ -20,13 +20,13 @@ class Arrow {
     stroke(0);
     PVector c = center;
     ellipse(c.x, c.y, 5, 5);
-    c.x = c.x + cos(angle)*(height/100);
-    c.y = c.y + sin(angle)*(height/100);      
+    c.x = c.x + cos(angle)*(height/160);
+    c.y = c.y + sin(angle)*(height/160);      
   }
   Boolean tooFar () {
     PVector c = center;
     PVector og = origCent;
-    if (dist(c.x,c.y,og.x,og.y) > 5) {
+    if (dist(c.x,c.y,og.x,og.y) > 200) {
       return true;
     }
     else {

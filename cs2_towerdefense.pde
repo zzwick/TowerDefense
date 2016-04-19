@@ -5,7 +5,7 @@ final int boardHeight = 900/wallVert; // number of dots down
 final int bloonRadius = 20;
 int score = 0;
 int gold = 100;
-int lives = 3;
+int lives = 10;
 boolean aboveB = false;
 boolean belowB = false;
 boolean rightB = false;
@@ -26,12 +26,14 @@ void setup() {
   bloons.add (new Bloons());
   tower = new ArrayList ();
   tower.add (new Tower(mouseSpot));
+  lives = 10;
 }
 
 void draw() {
   clear();
   walls.render();
   //printScore();
+  int time = (millis());
   if (bloons.size() >0) {
     for (int i = 0; i < bloons.size(); i++) {
       if (bloons.get(i).bKill) {
@@ -39,17 +41,17 @@ void draw() {
       } else {
         bloons.get(i).updatePositionB (bloons.get(i));
         bloons.get(i).render();
-        new Bloons();
         lose();
       }
+      println(millis()-time);
     }
   }
+          bloons.get(0).makeBloons();
   for (int i = 0; i < tower.size(); i++) {
     tower.get(i).releaseArrows();
   }
   for (int i = 0; i < arrow.size(); i++) {
     if (arrow.get(i).tooFar()) {
-      println(arrow.get(i).tooFar());
       arrow.remove(i);
     }
   }
