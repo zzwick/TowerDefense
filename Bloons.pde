@@ -55,15 +55,6 @@ class Bloons {
     }
   }
   
-  void makeBloons () {
-    float ranMake = random(0,1);
-    if (ranMake < 0.5) {
-      if (bloons.size() < 15) {
-      bloons.add(new Bloons());
-      }
-    }
-  }
-  
 /*    void kill (PVector fromPosition, PVector toPosition) {
     if (abs(fromPosition.x - toPosition.x) < (bloonRadius+ arrow.radius)) {
       if (abs(fromPosition.y - toPosition.y) < (bloonRadius+ arrow.radius)) {

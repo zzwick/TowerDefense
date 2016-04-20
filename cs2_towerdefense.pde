@@ -10,9 +10,10 @@ boolean aboveB = false;
 boolean belowB = false;
 boolean rightB = false;
 boolean leftB = false;
-PVector mouseSpot = new PVector(400, 300);
+int timeToNext = 100;
+int tStart = 0;
 
-float bloonSpeed = 2;
+float bloonSpeed = 1.75;
 
 Walls walls;
 ArrayList <Bloons> bloons;
@@ -23,40 +24,48 @@ void setup() {
   size(900, 900);
   walls = new Walls();
   bloons = new ArrayList ();
-  bloons.add (new Bloons());
   tower = new ArrayList ();
-  tower.add (new Tower(mouseSpot));
   lives = 10;
 }
 
 void draw() {
   clear();
   walls.render();
-  //printScore();
+  buyTower();
+  textSize(20);
+  text(gold, 10, 30);
+  fill(100, 0, 0);
+  text(lives, 10, 50);
   int time = (millis());
   if (bloons.size() >0) {
     for (int i = 0; i < bloons.size(); i++) {
       if (bloons.get(i).bKill) {
         bloons.remove(i);
       } else {
-        bloons.get(i).updatePositionB (bloons.get(i));
-        bloons.get(i).render();
-        lose();
+        if (bloons.get(i).lostLife) {
+          bloons.remove(i);
+        } else {
+          bloons.get(i).updatePositionB (bloons.get(i));
+          bloons.get(i).render();
+          lose();
+        }
       }
       println(millis()-time);
     }
   }
-          bloons.get(0).makeBloons();
-  for (int i = 0; i < tower.size(); i++) {
-    tower.get(i).releaseArrows();
-  }
-  for (int i = 0; i < arrow.size(); i++) {
-    if (arrow.get(i).tooFar()) {
-      arrow.remove(i);
+  makeBloons(15, 100);
+  if (tower.size() >0) {
+    for (int i = 0; i < tower.size(); i++) {
+      tower.get(i).releaseArrows();
     }
-  }
-  for (int i = 0; i < arrow.size(); i++) {
-    arrow.get(i).render();
+    for (int i = 0; i < arrow.size(); i++) {
+      if (arrow.get(i).tooFar()) {
+        arrow.remove(i);
+      }
+    }
+    for (int i = 0; i < arrow.size(); i++) {
+      arrow.get(i).render();
+    }
   }
   removeIfColliding();
 }
@@ -79,6 +88,8 @@ void removeIfColliding () {
         Arrow arro = arrow.get(j);
         if (colliding (arro, bloon)) {
           bloons.remove(i);
+          score = score + 10;
+          gold = gold + 10;
           arrow.remove(j);
         }
       }
@@ -96,5 +107,27 @@ boolean colliding (Arrow arrow, Bloons bloons) {
     return true;
   } else {
     return false;
+  }
+}
+
+void buyTower () {
+  if (mousePressed) {
+    if (tStart == 0) {
+      tStart = 20;
+      if (gold >= 50) {
+        tower.add(new Tower(new PVector(mouseX, mouseY)));
+        gold = gold - 50;
+      }
+    } else {
+      tStart = tStart -1;
+    }
+  }
+}
+void makeBloons (int lower, int upper) {
+  if (timeToNext == 0) {
+    bloons.add(new Bloons());
+    timeToNext = floor(random(lower, upper));
+  } else {
+    timeToNext = timeToNext -1;
   }
 }
