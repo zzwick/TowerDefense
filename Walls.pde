@@ -13,9 +13,30 @@ class Walls {
     this.horizontal = new boolean[boardHeight][boardWidth];
     for (int i=0; i<boardHeight; i++) {
       for (int j=0; j<boardWidth; j++) {
-        if (j == 70 || j == 90) {
+        if (j == 20 && i < 170) {
           vertical[i][j] = true;
-        } 
+        }
+        if (j == 25 && i <165) {
+          vertical[i][j] = true;
+        }
+        if (i == 165 && j < 45 && j>=25) {
+          vertical[i][j] = true;
+        }
+        if (i == 170 && j < 50 && j>=20) {
+          vertical[i][j] = true;
+        }
+        if (j == 45 && i <= 165 && i > 20) {
+          vertical[i][j] = true;
+        }
+        if (j == 50 && i <= 170 && i> 25) {
+          vertical[i][j] = true;
+        }
+        if (i == 20 && j >=45 && j<70) {
+          vertical[i][j] = true;
+        }
+        if (i == 25 && j >=50 && j< 65) {
+          vertical[i][j] = true;
+        }
       }
     }
   }
@@ -77,23 +98,23 @@ class Walls {
                 if (((arrayToPoint (j)) - fromPosition.y) > (-((bloonRadius/2)+(wallHor/2)))) {
                   if (((arrayToPoint (j)) - fromPosition.y) > 0) {
                     belowB = true;
-                        //move a direction
+                    //move a direction
                     hit = true;
                   } 
                   if (((arrayToPoint (j)) - fromPosition.y) == 0) {
                     if (travelD == Dir.WEST) {
                       leftB = true;
                       hit = true;
-                        //move a direction
+                      //move a direction
                     } else if (travelD == Dir.EAST) {
                       rightB = true;
                       hit = true;
-                        //move a direction
+                      //move a direction
                     }
                   } 
                   if (((arrayToPoint (j)) - fromPosition.y) < 0) {
                     aboveB = true;
-                        //move a direction
+                    //move a direction
                     hit = true;
                   }
                 }
@@ -102,7 +123,6 @@ class Walls {
         }
       }
     }
-
   }
 
   //makes a wall for vertical oriented with vertically and shifter up dotsbloonsing/2

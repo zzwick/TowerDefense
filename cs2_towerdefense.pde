@@ -12,6 +12,7 @@ boolean rightB = false;
 boolean leftB = false;
 int timeToNext = 100;
 int tStart = 0;
+boolean removedStep = false;
 
 float bloonSpeed = 1.75;
 
@@ -67,7 +68,7 @@ void draw() {
       arrow.get(i).render();
     }
   }
-  removeIfColliding();
+  removeFix();
 }
 
 float arrayToPoint(int x) {
@@ -80,6 +81,16 @@ void lose () {
   }
 }
 
+void removeFix () {
+  if (removedStep) {
+    removedStep = false;
+    removeIfColliding();
+  }
+  else {
+    removeIfColliding();
+  }
+}
+
 void removeIfColliding () {
   if (bloons.size() > 0) {
     for (int i = 0; i < bloons.size(); i++) {
@@ -87,13 +98,17 @@ void removeIfColliding () {
       for (int j = 0; j < arrow.size(); j++) {
         Arrow arro = arrow.get(j);
         if (colliding (arro, bloon)) {
-          bloons.remove(i);
-          score = score + 10;
-          gold = gold + 10;
-          arrow.remove(j);
+          if (removedStep == false) {
+            //problem when multiple arrows hit the bloons
+            bloons.remove(i);
+            removedStep = true;
+            score = score + 10;
+            gold = gold + 10;
+            arrow.remove(j);
+          }
         }
       }
-    }
+    }  
   }
 }
 
