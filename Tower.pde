@@ -7,7 +7,7 @@ class Tower {
   }
   
   void render() {
-   fill(200,0,0);
+   fill(0,200,0);
    ellipse(position.x, position.y, 10,10);
   }
   void shootArrow() {

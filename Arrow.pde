@@ -2,7 +2,7 @@ class Arrow {
   final PVector center;
   float angle;  //added float angle to the breakers so they go from the direction of the spaceship
   float speed;
-  float radius = 10;
+  float radius = 6;
   final PVector origCent;
 
   Arrow(PVector c, float a, float s) {
