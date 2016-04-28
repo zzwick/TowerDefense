@@ -37,7 +37,6 @@ class Walls {
         if (i == 25 && j >=50 && j< 65) {
           vertical[i][j] = true;
         }
-        //
         if (j == 65 && i >= 25 && i < 170) {
           horizontal[i][j] = true;
         }
@@ -49,6 +48,25 @@ class Walls {
         }
         if (i == 165 && j >=70 && j< 105) {
           vertical[i][j] = true;
+        }
+        if (j == 110 && i <= 170 && i > 65) {
+          horizontal[i][j] = true;
+        }
+        if (j == 105 && i <= 165 && i> 60) {
+          horizontal[i][j] = true;
+        }
+        if (i == 65 && j >=110 && j<135) {
+          vertical[i][j] = true;
+        }
+        if (i == 60 && j >=105 && j< 140) {
+          vertical[i][j] = true;
+        }
+        //
+        if (j == 135 && i >= 65) {
+          horizontal[i][j] = true;
+        }
+        if (j == 140 && i >= 60) {
+          horizontal[i][j] = true;
         }
       }
     }

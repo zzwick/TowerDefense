@@ -6,13 +6,13 @@ final int bloonRadius = 14;
 int score = 0;
 int gold = 100;
 int lives = 10;
-int timeToNext = 100;
+float timeToNext = 100;
 int tStart = 0;
 boolean removedStep = false;
-int lvlLower = 15;
-int lvlUpper = 75;
-
-float bloonSpeed = 2;
+float lvlLower = 10;
+float lvlUpper = 50;
+boolean ffd = false;
+float bloonSpeed = 3;
 
 Walls walls;
 ArrayList <Bloons> bloons;
@@ -37,6 +37,7 @@ void draw() {
   fill(100, 0, 0);
   text(lives, 10, 50);
   int time = (millis());
+  fastForward();
   if (bloons.size() >0) {
     for (int i = 0; i < bloons.size(); i++) {
       if (bloons.get(i).bKill) {
@@ -68,6 +69,35 @@ void draw() {
     }
   }
   removeFix();
+}
+
+void fastForward () {
+  if (keyPressed) {
+    if (keyCode == UP) {
+      for (int i = 0; i < bloons.size(); i++) {
+        bloons.get(i).speed = 8;
+        bloonSpeed = 8;
+      }
+      if (ffd == false) {
+        lvlLower = lvlLower * 0.375;
+        lvlUpper = lvlUpper * 0.375;
+        println(lvlLower);
+        ffd = true;
+      }
+    }
+  } else {
+    if (bloons.size() >0) {
+      for (int i = 0; i < bloons.size(); i++) {
+        bloons.get(i).speed = 3;
+        bloonSpeed = 3;
+      }
+    }
+    if (ffd) {
+      lvlLower = lvlLower / 0.375;
+      lvlUpper = lvlUpper / 0.375;
+      ffd = false;
+    }
+  }
 }
 
 float arrayToPoint(int x) {
@@ -112,10 +142,9 @@ void removeIfColliding () {
 }
 
 void checkLvl () {
-  if (lvlLower ==1 || lvlUpper == 1) {
-  } else if ((score+1 % 30) == 0) {
-    lvlLower = ceil(lvlLower * 0.9);
-    lvlUpper = ceil(lvlUpper * 0.9);
+  if ((score+1 % 30) == 0) {
+    lvlLower = (lvlLower * 0.8);
+    lvlUpper = (lvlUpper * 0.8);
   }
 }
 
@@ -146,9 +175,9 @@ void buyTower () {
   }
 }
 void makeBloons () {
-  if (timeToNext == 0) {
+  if (timeToNext <= 0) {
     bloons.add(new Bloons());
-    timeToNext = floor(random(lvlLower, lvlUpper));
+    timeToNext = (random(ceil(lvlLower), ceil(lvlUpper)));
   } else {
     timeToNext = timeToNext -1;
   }

@@ -1,6 +1,6 @@
 class Bloons {
   PVector position;
-  final float speed = bloonSpeed;
+  float speed = bloonSpeed;
   private Dir travelDirection = Dir.EAST;
   private boolean bKill;
   private final float startHeight = wallHor*24;
@@ -22,6 +22,7 @@ class Bloons {
     fill(200, 0, 0);
     ellipse(position.x, position.y, bloonRadius, bloonRadius);
   }
+  
   void updatePositionB(Bloons b) {   
     if (travelDirection == Dir.NORTH) {
       position.set(position.x, position.y - speed);
