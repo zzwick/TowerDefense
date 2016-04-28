@@ -9,6 +9,8 @@ int lives = 10;
 int timeToNext = 100;
 int tStart = 0;
 boolean removedStep = false;
+int lvlLower = 15;
+int lvlUpper = 75;
 
 float bloonSpeed = 2;
 
@@ -48,11 +50,10 @@ void draw() {
           lose();
         }
       }
-//      println(millis()-time);
+      //      println(millis()-time);
     }
   }
-  //15,100
-  makeBloons(15, 75);
+  makeBloons();
   if (tower.size() >0) {
     for (int i = 0; i < tower.size(); i++) {
       tower.get(i).releaseArrows();
@@ -83,8 +84,7 @@ void removeFix () {
   if (removedStep) {
     removedStep = false;
     removeIfColliding();
-  }
-  else {
+  } else {
     removeIfColliding();
   }
 }
@@ -100,13 +100,22 @@ void removeIfColliding () {
             //problem when multiple arrows hit the bloons
             bloons.remove(i);
             removedStep = true;
-            score = score + 10;
-            gold = gold + 10;
+            score = score + 1;
+            gold = gold + 1;
             arrow.remove(j);
+            checkLvl();
           }
         }
       }
-    }  
+    }
+  }
+}
+
+void checkLvl () {
+  if (lvlLower ==1 || lvlUpper == 1) {
+  } else if ((score+1 % 30) == 0) {
+    lvlLower = ceil(lvlLower * 0.9);
+    lvlUpper = ceil(lvlUpper * 0.9);
   }
 }
 
@@ -126,7 +135,7 @@ boolean colliding (Arrow arrow, Bloons bloons) {
 void buyTower () {
   if (mousePressed) {
     if (tStart == 0) {
-      tStart = 20;
+      tStart = 14;
       if (gold >= 50) {
         tower.add(new Tower(new PVector(mouseX, mouseY)));
         gold = gold - 50;
@@ -136,10 +145,10 @@ void buyTower () {
     }
   }
 }
-void makeBloons (int lower, int upper) {
+void makeBloons () {
   if (timeToNext == 0) {
     bloons.add(new Bloons());
-    timeToNext = floor(random(lower, upper));
+    timeToNext = floor(random(lvlLower, lvlUpper));
   } else {
     timeToNext = timeToNext -1;
   }
